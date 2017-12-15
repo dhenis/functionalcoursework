@@ -1,5 +1,11 @@
 -- |Module that performs http requests as well as parsing returned html.
-module CrawlerType where
+module CrawlerType  (
+  City(City),
+  Weather(Weather),
+  Temp(Temp)
+
+  )
+  where
 
 
 data City = City{id_city ::Int,city_name::String, lon::String, lat ::String,ground_level ::String,sea_level::String  }

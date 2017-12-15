@@ -1,18 +1,28 @@
 -- |Module containing functions that operate on the database urls.db
-module CrawlerDB where
+module CrawlerDB
+(
+dbConnect,
+getCity,
+createDB,
+dbDisconnect,
+getURLs
+
+)
+
+where
+
 import CrawlerType
 import CrawlerHTTP
 import Database.HDBC
 import Database.HDBC.Sqlite3
 import Control.Monad
 import Data.List
+import Data.Char
 
 -- |Method to create the database urls.db
 -- It uses connectSqlite3 from Database.HDBC.Sqlite3
-
 dbConnect :: IO Connection
 dbConnect = connectSqlite3 "weather.db"
--- dbConnection = do
 
    --conn <- connectSqlite3 "weather.db"
    --run conn "CREATE TABLE IF NOT EXISTS urls (url TEXT, processed BOOL)" [] -- active this if you dont have the table
@@ -62,12 +72,29 @@ insertTemp conn temp = do
     commit conn
 
 
+getCity :: Connection -> IO [City]
+getCity conn = do
+  result <- quickQuery' conn "SELECT * FROM city" []
+  return $ map (\x -> City (fromSql $ head x) (fromSql $ x !! 1)
+                (fromSql $ x !! 2)(fromSql $ x !! 3)(fromSql $ x !! 4)(fromSql $ x !! 5) ) result
+
+
+getWeather :: Connection -> IO [Weather]
+getWeather conn = do
+  result <- quickQuery' conn "SELECT * FROM weather" []
+  return $ map (\x -> Weather (fromSql $ head x) (fromSql $ x !! 1)
+                (fromSql $ x !! 2)(fromSql $ x !! 3)(fromSql $ x !! 4))result
+
+
+getTemp :: Connection -> IO [Temp]
+getTemp conn = do
+  result <- quickQuery' conn "SELECT * FROM temp" []
+  return $ map (\x -> Temp (fromSql $ head x) (fromSql $ x !! 1)
+                (fromSql $ x !! 2)(fromSql $ x !! 3)(fromSql $ x !! 4)(fromSql $ x !! 5) ) result
 
 
 
 
-
--- jfklsjdfjsdjlj
 
 
 urlNotInDB :: Connection -> URL -> IO Bool

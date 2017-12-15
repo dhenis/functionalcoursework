@@ -1,6 +1,8 @@
 -- |Module that performs http requests as well as parsing returned html.
 module CrawlerHTTP where
 
+import Data.Char
+import Data.List
 import Network.HTTP
 import Network.HTTP.Conduit
 import Network.URI

@@ -1,5 +1,3 @@
-
-
 module Main where
 
 import CrawlerDB
@@ -10,6 +8,8 @@ import System.Environment
 import Data.Maybe
 import Control.Exception
 import Control.Monad
+import Data.Char
+import Data.List
 
 
 
@@ -25,30 +25,15 @@ import Control.Monad
 --
 --  [@crawl url@] will download a given page, parse the links and store on the database
 main = do
-  conn <- dbConnect
-  createDB conn  -- conn <- dbConnection
+    conn <- dbConnect
+    createDB conn  -- conn <- dbConnection
 
 
-  putStrLn "Hi, what’s your name? \n"
-  --  name <- getLine
-  --  putStrLn $ "Dear " ++ name ++ ", do you wanna be my friend?"
-  --
-  -- -- lalala = askForActor
+    putStrLn "Enter city name to check the weather : "
+    --name <- getLine
+  -- putStrLn $ "Dear " ++ name ++ ", do you wanna be my friend?"
+  -- --
 
-  putStrLn
-     "Usage: Crawler command [args]\n\
-     \\n\
-     \create           Create database urls.db\n\
-     \show url         Shows contents of given URL\n\
-     \saved            List urls on database\n\
-     \crawl url        Gather urls and store in database\n\
-     \unfold           Crawl each of the saved URLs\n"
-
--- myString = getLine
-
--- lalalal = getLine
-
---
 --
 -- actoreName <- askForActor
 
